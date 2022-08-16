@@ -2,6 +2,9 @@ import { render } from "@testing-library/react";
 import React from "react";
 import Interface from "./Interface";
 import { initializeApp } from 'firebase/app';
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {

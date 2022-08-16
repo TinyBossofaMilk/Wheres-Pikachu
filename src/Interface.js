@@ -1,9 +1,9 @@
 import { render } from "@testing-library/react";
 import React from "react";
-import findpikachu from "./screens/findpikachu"
+// import findpikachu from "src/screens/findpikachu.jpg"
 
 const Interface = (props) => {
-    const screen = findpikachu;
+    const screen = "src/screens/findpikachu.jpg";
 
     const addOnClick = () => {
 
@@ -11,7 +11,7 @@ const Interface = (props) => {
 
     return (
         <div>
-            <img src={screen}></img>
+            <img src={"./screens/findpikachu.jpg"}></img>
         </div>
     );
 }
