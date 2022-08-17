@@ -1,17 +1,18 @@
 import { render } from "@testing-library/react";
 import React from "react";
-// import findpikachu from "src/screens/findpikachu.jpg"
+// import findpikachu from "./screens/findpikachu"
 
 const Interface = (props) => {
-    const screen = "src/screens/findpikachu.jpg";
+    // const screen = findpikachu;
 
-    const addOnClick = () => {
+    const addOnClickListener = () => {
 
     };
 
     return (
         <div>
-            <img src={"./screens/findpikachu.jpg"}></img>
+            Interface Here!
+            <img src="findpikachu.jpg"></img>
         </div>
     );
 }
