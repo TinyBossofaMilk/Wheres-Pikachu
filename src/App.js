@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import React from "react";
+import React, { useState } from "react";
 import Interface from "./Interface";
 import { initializeApp } from 'firebase/app';
 
@@ -17,8 +17,31 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 function App() {
+  const image = require("./findpikachu.jpg") ;
+  const map = "pikamap";
+  const [showScreen, setShowScreen] = useState(false);
+  const [start, setStart] = useState();
+  const [end, setEnd] = useState();
+  
+  const gameStart = (e) => {
+    setShowScreen(true);
+    const gamescreen = document.getElementById("interface");
+    setStart(new Date());
+  };
+
+  const gameFinish = (e) => {
+    setEnd(new Date());
+
+  };
+
   return (
-    <Interface />
+    <div>
+      {showScreen ? 
+        
+        <Interface image={image} map={map} gameFinish={gameFinish} /> 
+        
+        : <button onClick={gameStart}>Start</button>}
+    </div>
   );
 }
 

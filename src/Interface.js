@@ -1,18 +1,21 @@
 import { render } from "@testing-library/react";
 import React from "react";
-// import findpikachu from "./screens/findpikachu"
 
 const Interface = (props) => {
-    // const screen = findpikachu;
+    const {image, map, gameFinish} = props;
 
-    const addOnClickListener = () => {
-
-    };
+    // const pokemonOnClick = (e) => {
+    //     console.log("helloooo");
+    // };
 
     return (
-        <div>
+        <div id="interface" >
             Interface Here!
-            <img src="findpikachu.jpg"></img>
+            <img src={image} useMap={`#${map}`}></img>
+            <map name={map}>
+                {/* <area shape="circle" coords=""/> */}
+                <area shape="rect" coords="74, 951, 106, 998" onClick={gameFinish} />
+            </map>
         </div>
     );
 }
