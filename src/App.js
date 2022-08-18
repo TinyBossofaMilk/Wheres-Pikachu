@@ -1,7 +1,8 @@
 import { render } from "@testing-library/react";
 import React, { useState } from "react";
-import Interface from "./Interface";
 import { initializeApp } from 'firebase/app';
+import Interface from "./Interface";
+import Timer from "./Timer";
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
@@ -22,25 +23,45 @@ function App() {
   const [showScreen, setShowScreen] = useState(false);
   const [start, setStart] = useState();
   const [end, setEnd] = useState();
-  
+  const [gameOver, setGameOver] = useState(false);
+
   const gameStart = (e) => {
     setShowScreen(true);
     const gamescreen = document.getElementById("interface");
     setStart(new Date());
+    console.log("gameStart =")
+    console.log(start)
+    console.log("gameEnd =")
+    console.log(end)
   };
 
   const gameFinish = (e) => {
-    setEnd(new Date());
-
+    if(!gameOver){
+      setEnd(new Date());
+      setGameOver(true);
+    }
+    console.log("gameStart =")
+    console.log(start)
+    console.log("gameEnd =")
+    console.log(end)
   };
+
+  const reset = () => {
+    setStart(undefined);
+    setShowScreen(false);
+    setGameOver(false);
+  }
 
   return (
     <div>
+      <Timer start={start}/>
       {showScreen ? 
         
         <Interface image={image} map={map} gameFinish={gameFinish} /> 
         
         : <button onClick={gameStart}>Start</button>}
+
+      {gameOver ? <button onClick={reset}>Retry?</button> : null}
     </div>
   );
 }

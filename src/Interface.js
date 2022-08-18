@@ -4,10 +4,6 @@ import React from "react";
 const Interface = (props) => {
     const {image, map, gameFinish} = props;
 
-    // const pokemonOnClick = (e) => {
-    //     console.log("helloooo");
-    // };
-
     return (
         <div id="interface" >
             Interface Here!
