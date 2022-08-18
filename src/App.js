@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { initializeApp } from 'firebase/app';
 import Interface from "./Interface";
 import Timer from "./Timer";
@@ -23,16 +23,15 @@ function App() {
   const [showScreen, setShowScreen] = useState(false);
   const [start, setStart] = useState();
   const [end, setEnd] = useState();
+  const [time, setTime] = useState(0); // 1000 = 1 second
   const [gameOver, setGameOver] = useState(false);
+  // let interval;
 
   const gameStart = (e) => {
     setShowScreen(true);
-    const gamescreen = document.getElementById("interface");
-    setStart(new Date());
-    console.log("gameStart =")
-    console.log(start)
-    console.log("gameEnd =")
-    console.log(end)
+    // setStart(new Date());
+    // setTime(0);
+    // interval = setInterval(setTime((time) => time + 10) , 10);
   };
 
   const gameFinish = (e) => {
@@ -40,10 +39,8 @@ function App() {
       setEnd(new Date());
       setGameOver(true);
     }
-    console.log("gameStart =")
-    console.log(start)
-    console.log("gameEnd =")
-    console.log(end)
+
+    // clearInterval(interval)
   };
 
   const reset = () => {
@@ -52,9 +49,19 @@ function App() {
     setGameOver(false);
   }
 
+  useEffect(() => {
+    let interval = null;
+    if(showScreen)
+      {interval = setInterval(() => {setTime(time + 1000)}, 1000);}
+    else if(gameOver)
+      clearInterval(interval);
+
+    return () => {clearInterval(interval)}
+  }, [gameStart, gameFinish, time])
+
   return (
     <div>
-      <Timer start={start}/>
+      <Timer time={time}/>
       {showScreen ? 
         
         <Interface image={image} map={map} gameFinish={gameFinish} /> 
