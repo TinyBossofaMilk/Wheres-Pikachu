@@ -6,7 +6,6 @@ const Interface = (props) => {
 
     return (
         <div id="interface" >
-            Interface Here!
             <img src={image} useMap={`#${map}`}></img>
             <map name={map}>
                 {/* <area shape="circle" coords=""/> */}

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { initializeApp } from 'firebase/app';
 import Interface from "./Interface";
 import Timer from "./Timer";
+import styles from "./styles.css"
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
@@ -20,55 +21,45 @@ const app = initializeApp(firebaseConfig);
 function App() {
   const image = require("./findpikachu.jpg") ;
   const map = "pikamap";
-  const [showScreen, setShowScreen] = useState(false);
-  const [start, setStart] = useState();
-  const [end, setEnd] = useState();
+  const [gameInProgress, setGameInProgress] = useState(false);
   const [time, setTime] = useState(0); // 1000 = 1 second
   const [gameOver, setGameOver] = useState(false);
-  // let interval;
 
   const gameStart = (e) => {
-    setShowScreen(true);
-    // setStart(new Date());
-    // setTime(0);
-    // interval = setInterval(setTime((time) => time + 10) , 10);
+    setGameInProgress(true);
   };
 
   const gameFinish = (e) => {
-    if(!gameOver){
-      setEnd(new Date());
       setGameOver(true);
-    }
-
-    // clearInterval(interval)
   };
 
   const reset = () => {
-    setStart(undefined);
-    setShowScreen(false);
+    setGameInProgress(false);
     setGameOver(false);
+    setTime(0);
   }
 
   useEffect(() => {
     let interval = null;
-    if(showScreen)
-      {interval = setInterval(() => {setTime(time + 1000)}, 1000);}
-    else if(gameOver)
+    if(gameOver)
       clearInterval(interval);
+    else if(gameInProgress)
+      {interval = setInterval(() => {setTime(time + 10)}, 10);}
+
 
     return () => {clearInterval(interval)}
   }, [gameStart, gameFinish, time])
 
   return (
-    <div>
-      <Timer time={time}/>
-      {showScreen ? 
-        
+    <div id="app">
+      {gameInProgress ? 
         <Interface image={image} map={map} gameFinish={gameFinish} /> 
-        
         : <button onClick={gameStart}>Start</button>}
 
-      {gameOver ? <button onClick={reset}>Retry?</button> : null}
+      <div id="sidebar">
+        <Timer time={time}/>
+        {gameOver ? <button onClick={reset}>Retry?</button> : null}
+      </div>
     </div>
   );
 }
