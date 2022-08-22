@@ -1,9 +1,38 @@
+'use strict';
+
 import { render } from "@testing-library/react";
 import React, { useEffect, useState } from "react";
 import { initializeApp } from 'firebase/app';
 import Interface from "./Interface";
 import Timer from "./Timer";
 import styles from "./styles.css"
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  limit,
+  onSnapshot,
+  setDoc,
+  updateDoc,
+  doc,
+  serverTimestamp,
+} from 'firebase/firestore';
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from 'firebase/storage';
+import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import { getPerformance } from 'firebase/performance';
+
+import { getFirebaseConfig } from './firebase-config.js';
+
+
+
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
@@ -16,7 +45,9 @@ const firebaseConfig = {
   measurementId: "G-FDPDYKH7WP"
 };
 
-const app = initializeApp(firebaseConfig);
+// const app = initializeApp(firebaseConfig);
+// const firebase = require("firebase");
+// require("firebase/firestore")
 
 function App() {
   const image = require("./findpikachu.jpg") ;
@@ -31,13 +62,14 @@ function App() {
 
   const gameFinish = (e) => {
       setGameOver(true);
+      updateFastestTime("user", time);
   };
 
   const reset = () => {
     setGameInProgress(false);
     setGameOver(false);
     setTime(0);
-  }
+  };
 
   useEffect(() => {
     let interval = null;
@@ -45,10 +77,24 @@ function App() {
       clearInterval(interval);
     else if(gameInProgress)
       {interval = setInterval(() => {setTime(time + 10)}, 10);}
-
-
     return () => {clearInterval(interval)}
-  }, [gameStart, gameFinish, time])
+  }, [gameStart, gameFinish, time]);
+
+  async function updateFastestTime(user, time) {
+    try{
+      const docRef = await addDoc(collection (getFirestore(), "fastestTimes"), {
+        "user": user,
+        "time": time
+      });
+    console.log("High score uploaded");
+    }
+    catch(error){console.error("Error updating highscore", error);}
+  };
+
+  // const querySnapshot = await getDocs(collection(getFirestore(), "fastestTimes"));
+  //   querySnapshot.forEach((doc) => {
+  //     console.log(`${doc.id} => ${doc.data()}`);
+  // });
 
   return (
     <div id="app">

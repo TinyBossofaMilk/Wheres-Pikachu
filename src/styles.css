@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  background-color: gray;
 }
 
 root {
@@ -13,4 +14,9 @@ root {
 #sidebar {
   display: flex;
   flex-direction: column;
+}
+
+#timer {
+  color: white;
+  font-weight: bold;
 }
