@@ -11,8 +11,20 @@ root {
   display: flex;
 }
 
+#interface {
+  flex: 4 0 auto;
+  height: 5000px;
+}
+
+#interface img {
+  object-fit: cover;
+  /* width: max-content;
+  height: fit-content; */
+}
+
 #sidebar {
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
 }
 
